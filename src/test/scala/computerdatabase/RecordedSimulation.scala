@@ -130,6 +130,10 @@ class RecordedSimulation extends Simulation {
 			.get("/wp-content/uploads/2016/02/logo_loading-270x270.png")
 			.headers(headers_1)))
 
-	setUp(scn.inject(rampUsers(10) over (5 seconds))).protocols(httpProtocol)
-
-}
+setUp(scn.inject(constantUsersPerSec(10) during (1 minutes))).throttle(
+		
+  reachRps(10) in (10 seconds),
+  holdFor(1 minute)
+  
+).protocols(httpProtocol)
+} 
